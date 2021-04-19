@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect} from 'react'
 import SpotifyWebApi from 'spotify-web-api-js';
 import './App.css';
 import Login from "./components/Login";
@@ -9,10 +9,7 @@ import {useDataLayerValue} from "./DataLayer";
 const spotify = new SpotifyWebApi();
 
 function App() {
-
-  const [token, setToken] = useState(null);
-  const [{}, dispatch] = useDataLayerValue();
-
+  const [{user,token}, dispatch] = useDataLayerValue();
 
   //useEffect runs a code based on given condition
   useEffect(() => {
@@ -21,7 +18,10 @@ function App() {
     const _token = hash.access_token;
     
     if(_token){
-      setToken(_token)
+      dispatch({
+        type: 'set_Token',
+        token: _token,
+      });
       spotify.setAccessToken(_token);
 
       //gives user details
@@ -32,16 +32,34 @@ function App() {
         });
         console.log("Idhar dekh MC",user);
       })
+
+      spotify.getUserPlaylists().then((playlists) => {
+        dispatch({
+          type:'set_Playlist',
+          playlists:playlists,
+        })
+        console.log("asdaf",playlists);
+      })
+
+      spotify.getPlaylist('37i9dQZEVXcF4KxPMggWB0').then(response =>{
+        dispatch({
+          type:'set_DiscoverWeekly',
+          discover_weekly:response,
+        })
+        console.log("karle lavde",response);
+      })
     } 
 
     console.log("Idhar dekh lavde 👉",token);
-  }, [dispatch, token]);
+  }, []);
 
+    console.log('🚗',user);
+    console.log('🚓',token);
 
   return (
     <div className="App">
       {
-        token ? (<Player />) : ( <Login />)
+        token ? (<Player spotify = {spotify} />) : ( <Login />)
       }
     </div>
   );

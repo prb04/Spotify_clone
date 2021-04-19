@@ -1,0 +1,19 @@
+.op{
+    color: grey;
+    height: 35px;
+    cursor: pointer;
+    transition: 135ms color ease-in;
+    display: flex;
+    align-items: center;
+    font-size: 1rem  ;
+}
+
+.op:hover{
+    color: rgb(30, 215, 96);
+} 
+
+.op_icon{
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
