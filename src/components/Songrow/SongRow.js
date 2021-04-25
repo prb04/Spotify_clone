@@ -9,7 +9,7 @@ function SongRow({track}) {
     const [{}, dispatch] = useDataLayerValue();
     const [{playing, repeat}, soundDispatch] = useSoundLayerValue();
 
-    const changeTrack = (e,track) => {
+    const changeTrack = (e, track) => {
         dispatch({
             type: 'set_Track',
             track:track
@@ -39,7 +39,7 @@ function SongRow({track}) {
     }
 
     return (
-        <div className='songrow' onclick={(e) => changeTrack(e,track)}>
+        <div className='songrow' onClick={e => changeTrack(e, track)}>
             <img className='sr_album' src={track.album.images[0].url} alt="" />
             <div className="sr_info">
               <h1>{track.name}</h1>

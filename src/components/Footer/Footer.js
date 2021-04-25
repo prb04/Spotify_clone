@@ -116,7 +116,7 @@ function Footer() {
                 <img className='logo' src={track ? track.album.images[0].url : ''} alt='' />
                 <div className='f_songinfo'>
                     <h4>{track ? track.name : 'No song selected'}</h4>
-                    <p>{track ? track.artist.map((artist) => artist.name).join(", ") : null}</p>
+                    <p>{track ? track.artists.map((artist) => artist.name).join(", ") : null}</p>
                 </div>
             </div>
 
