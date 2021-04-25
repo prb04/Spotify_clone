@@ -3,14 +3,16 @@ export const initialState = {
     playlists:[],
     playing:false,
     item:null,
-    //remove after development finish..
-    // token:'BQDevi1JVuMKHrCWQhcb26cT-afQVvVPPXXpkx6fBPOGl24IPfHQStG47sewlZOWBvsOx2U7zci1rk6UI7_dBl83xsbbCB2gtmAeucvzJkp_B4stMvxjVVxqz7EKwTndDQhAkr22hsHjivhmB-ehL2OwyyhDPd_bi2Th'
+    current_playlist:null,
+    tracks:null,
+    track:null,
+    token:null,
 };
 
 const reducer = (state, action) => {
-    console.log(action);
 
     switch (action.type) {
+        
         case 'set_User':
             return{
                 ...state,
@@ -29,11 +31,31 @@ const reducer = (state, action) => {
                 playlists:action.playlists,
             }
         
-        case 'set_DiscoverWeekly':
+        case 'set_Current_playlist':
+            let currentPlaylist = null;
+            state.playlists.items.forEach(playlist =>{
+                if(playlist.id ===action.id){
+                    currentPlaylist = playlist;
+                }
+            })
+        
+        return{
+            ...state,
+            current_playlist: currentPlaylist
+        }
+
+        
+        case 'set_Tracks':
             return{
                 ...state,
-                discover_weekly:action.discover_weekly,
+                tracks: action.tracks
             }
+        
+        case 'set_Track':
+            return{
+                ...state,
+                track:action.track
+            }    
 
         default:
             return state;

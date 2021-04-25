@@ -1,15 +1,15 @@
 import React, { useEffect} from 'react'
 import SpotifyWebApi from 'spotify-web-api-js';
 import './App.css';
-import Login from "./components/Login";
-import Player from './components/Player';
+import Login from "./components/Login/Login.js";
+import Player from './components/Player/Player';
 import { getTokenfromURL } from './spotify';
-import {useDataLayerValue} from "./DataLayer";
+import {useDataLayerValue} from "./data/DataLayer";
 
 const spotify = new SpotifyWebApi();
 
 function App() {
-  const [{user,token}, dispatch] = useDataLayerValue();
+  const [{token}, dispatch] = useDataLayerValue();
 
   //useEffect runs a code based on given condition
   useEffect(() => {
@@ -38,28 +38,18 @@ function App() {
           type:'set_Playlist',
           playlists:playlists,
         })
-        console.log("asdaf",playlists);
+        console.log("playlists",playlists);
       })
 
-      spotify.getPlaylist('37i9dQZEVXcF4KxPMggWB0').then(response =>{
-        dispatch({
-          type:'set_DiscoverWeekly',
-          discover_weekly:response,
-        })
-        console.log("karle lavde",response);
-      })
     } 
 
     console.log("Idhar dekh lavde 👉",token);
-  }, []);
-
-    console.log('🚗',user);
-    console.log('🚓',token);
+  }, [dispatch, token]);
 
   return (
     <div className="App">
       {
-        token ? (<Player spotify = {spotify} />) : ( <Login />)
+        token ? (<Player spotify = {spotify} />) : <Login />
       }
     </div>
   );
